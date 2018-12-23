@@ -236,6 +236,7 @@ import static java.security.AccessController.getContext;
            @Override
            protected void onPostExecute(String result) {
 
+               Log.d("tag","In on post Execute");
                if (result.equals("success")) {
                    Intent intent = new Intent(context.getApplicationContext(), homeActivity.class);
                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

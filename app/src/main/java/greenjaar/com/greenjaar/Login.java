@@ -7,6 +7,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,7 +47,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         {
             case R.id.loginbutton :
                 Log.d("tag", "Login clicked");
-                validate(uname.getText().toString(), upass.getText().toString());
+                if(FieldValidation() && validatePassword()) {
+                    validate(uname.getText().toString(), upass.getText().toString());
+                }
                 break;
             case R.id.signuplink :
                 Log.d("tag","sign up link");
@@ -62,8 +65,37 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+    private boolean FieldValidation() {
+
+        String emailinput = uname.getText().toString().trim();
+        if (emailinput.isEmpty()) {
+            uname.setError("Field can't be empty");
+            return false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailinput).matches()) {
+            uname.setError("Enter a valid Email Address");
+            return false;
+        } else {
+            uname.setError(null);
+            return true;
+        }
+
+    }
+    private boolean validatePassword() {
+
+        String passinput = upass.getText().toString().trim();
+        if(passinput.isEmpty()){
+            upass.setError("Enter a password");
+            return false;
+        }
+        else
+        {
+            upass.setError(null);
+            return true;
+        }
+    }
     @TargetApi(Build.VERSION_CODES.CUPCAKE)
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
+    //Authentication
     private void validate(String Name, String pass) {
 
         Log.d("tag", "into validate");
